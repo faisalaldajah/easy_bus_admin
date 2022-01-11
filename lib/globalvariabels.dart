@@ -1,3 +1,4 @@
+import 'package:easy_bus_admin/Model/TripDetails.dart';
 import 'package:easy_bus_admin/Model/driver.dart';
 import 'package:easy_bus_admin/Model/user.dart';
 import 'package:easy_bus_admin/Screens/MainPage.dart';
@@ -7,9 +8,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 User currentFirebaseUser;
+// ignore: prefer_typing_uninitialized_variables
 var userInfo;
 List<Driver> driverdata = [];
 List<UserDetails> userData = [];
+List<TripDetails> tripDetails = [];
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 void showSnackBar(String title) {
   final snackbar = SnackBar(
@@ -30,7 +33,7 @@ void getCurrentUserInfo(context) async {
   String userid = currentFirebaseUser.uid;
 
   DatabaseReference userRef =
-      FirebaseDatabase.instance.reference().child('users/$userid');
+      FirebaseDatabase.instance.reference().child('admin/$userid');
   userRef.once().then((DataSnapshot snapshot) {
     if (snapshot.value != null) {
       userInfo = UserDetails.fromSnapshot(snapshot);

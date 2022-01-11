@@ -1,8 +1,11 @@
-// ignore_for_file: file_names, missing_return
+// ignore_for_file: file_names, missing_return, prefer_const_constructors
 
+import 'package:easy_bus_admin/Model/TripDetails.dart';
 import 'package:easy_bus_admin/Model/driver.dart';
 import 'package:easy_bus_admin/Model/user.dart';
+import 'package:easy_bus_admin/Screens/TripDetailsView.dart';
 import 'package:easy_bus_admin/brand_colors.dart';
+import 'package:easy_bus_admin/widgets/DataViewer.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_bus_admin/globalvariabels.dart';
@@ -27,22 +30,44 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "الرئيسية",
-          style: TextStyle(color: Colors.black),
+        title: const Center(
+          child: Text(
+            "الرئيسية",
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'JF-Flat-regular',
+            ),
+          ),
         ),
         backgroundColor: BrandColors.colorBackground,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
-        ),
       ),
       backgroundColor: BrandColors.colorBackground,
-      body: SingleChildScrollView(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            DataViewer(
+              icon: const Icon(Icons.person),
+              title: 'عدد المستخدمين',
+              total: userData.length,
+            ),
+            DataViewer(
+              icon: const Icon(Icons.person),
+              title: 'عدد السواقين',
+              total: driverdata.length,
+            ),
+            DataViewer(
+              icon: const Icon(Icons.bus_alert),
+              title: 'عدد الرحلات',
+              total: tripDetails.length,
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => TripDetailsView()));
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -51,24 +76,47 @@ class _MainPageState extends State<MainPage> {
         FirebaseDatabase.instance.reference().child('drivers');
     DatabaseReference userRef =
         FirebaseDatabase.instance.reference().child('users');
+    DatabaseReference tripRef =
+        FirebaseDatabase.instance.reference().child('rideRequest');
     // ignore: prefer_typing_uninitialized_variables
     var keys;
     Driver driver;
     UserDetails user;
+    TripDetails trip;
     driverRef.once().then((DataSnapshot snapshot) {
       keys = snapshot.value.keys;
       for (var key in keys) {
         driver = Driver(
           fullName: snapshot.value[key]['fullname'],
           phone: snapshot.value[key]['phone'],
-          busNumber: snapshot.value[key]['carNumber'],
-          busType: snapshot.value[key]['carType'],
-          approveDriver: snapshot.value[key]['approveDriver'],
-          socialDriverNumber: snapshot.value[key]['socialAgentNumber'],
-          driverType: snapshot.value[key]['taxiType'],
+          busNumber: snapshot.value['busNumber'],
+          busType: snapshot.value['busType'],
+          socialDriverNumber: snapshot.value['socialDriverNumber'],
+          driverType: snapshot.value['driverType'],
           email: snapshot.value[key]['email'],
         );
-        driverdata.add(driver);
+        setState(() {
+          driverdata.add(driver);
+        });
+      }
+    });
+    tripRef.once().then((DataSnapshot snapshot) {
+      keys = snapshot.value.keys;
+      for (var key in keys) {
+        trip = TripDetails(
+          riderName: snapshot.value[key]['rider_name'],
+          riderPhone: snapshot.value[key]['rider_phone'],
+          driverPhone: snapshot.value[key]['driver_phone'],
+          driverName: snapshot.value[key]['driver_name'],
+          busDetails: snapshot.value[key]['car_details'],
+          createdAt: snapshot.value[key]['created_at'],
+          destinationAddress: snapshot.value[key]['destination_address'],
+          iD: key,
+          pickUpAddress: snapshot.value[key]['pickup_address'],
+        );
+        setState(() {
+          tripDetails.add(trip);
+        });
       }
     });
     userRef.once().then((DataSnapshot snapshot) {
@@ -78,7 +126,9 @@ class _MainPageState extends State<MainPage> {
           fullName: snapshot.value[key]['fullname'],
           phone: snapshot.value[key]['phone'],
         );
-        userData.add(user);
+        setState(() {
+          userData.add(user);
+        });
       }
     });
   }
