@@ -13,6 +13,11 @@ class Driver {
   var driversIsAvailable;
   String driverType;
   String approveDriver;
+  String oil;
+  String exDate;
+  String front;
+  String rear;
+  String dis;
   Driver({
     this.fullName,
     this.email,
@@ -23,6 +28,12 @@ class Driver {
     this.busNumber,
     this.driverType,
     this.approveDriver,
+    this.dis,
+    this.driversIsAvailable,
+    this.exDate,
+    this.front,
+    this.oil,
+    this.rear,
   });
 
   Driver.fromSnapshot(DataSnapshot snapshot) {
@@ -36,5 +47,10 @@ class Driver {
     driversIsAvailable = snapshot.value['driversIsAvailable'];
     driverType = snapshot.value['driverType'];
     approveDriver = snapshot.value['approveDriver'];
+    oil = snapshot.value['oil'];
+    exDate = snapshot.value['exDate'];
+    dis = snapshot.value['dis'];
+    rear=snapshot.value['rear'];
+    front = snapshot.value['front'];
   }
 }
