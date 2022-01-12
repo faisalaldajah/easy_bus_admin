@@ -3,6 +3,7 @@
 import 'package:easy_bus_admin/Model/TripDetails.dart';
 import 'package:easy_bus_admin/Model/driver.dart';
 import 'package:easy_bus_admin/Model/user.dart';
+import 'package:easy_bus_admin/Screens/DriverScreenDetrails.dart';
 import 'package:easy_bus_admin/Screens/TripDetailsView.dart';
 import 'package:easy_bus_admin/brand_colors.dart';
 import 'package:easy_bus_admin/widgets/DataViewer.dart';
@@ -55,6 +56,10 @@ class _MainPageState extends State<MainPage> {
               icon: const Icon(Icons.person),
               title: 'عدد السواقين',
               total: driverdata.length,
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DriverScreenDetails()));
+              },
             ),
             DataViewer(
               icon: const Icon(Icons.bus_alert),
