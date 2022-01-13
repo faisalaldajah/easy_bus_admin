@@ -40,10 +40,4 @@ void getCurrentUserInfo(context) async {
       Navigator.pushNamedAndRemoveUntil(context, MainPage.id, (route) => false);
     }
   });
-
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) => PermissionLocation(),
-  );
 }

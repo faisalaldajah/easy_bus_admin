@@ -57,8 +57,10 @@ class _MainPageState extends State<MainPage> {
               title: 'عدد السواقين',
               total: driverdata.length,
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DriverScreenDetails()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DriverScreenDetails()));
               },
             ),
             DataViewer(
