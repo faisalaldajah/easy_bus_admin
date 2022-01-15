@@ -47,10 +47,10 @@ class Driver {
     driversIsAvailable = snapshot.value['driversIsAvailable'];
     driverType = snapshot.value['driverType'];
     approveDriver = snapshot.value['approveDriver'];
-    oil = snapshot.value['oil'];
-    exDate = snapshot.value['exDate'];
-    dis = snapshot.value['dis'];
-    rear=snapshot.value['rear'];
-    front = snapshot.value['front'];
+    oil = snapshot.value['fixData']['oil'];
+    exDate = snapshot.value['fixData']['exDate'];
+    dis = snapshot.value['fixData']['dis'];
+    rear=snapshot.value['fixData']['rear'];
+    front = snapshot.value['fixData']['front'];
   }
 }

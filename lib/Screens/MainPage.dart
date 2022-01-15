@@ -101,6 +101,11 @@ class _MainPageState extends State<MainPage> {
           socialDriverNumber: snapshot.value['socialDriverNumber'],
           driverType: snapshot.value['driverType'],
           email: snapshot.value[key]['email'],
+          dis: snapshot.value[key]['fixData']['dis'],
+          exDate: snapshot.value[key]['fixData']['exDate'],
+          oil: snapshot.value[key]['fixData']['oil'],
+          front: snapshot.value[key]['fixData']['front'],
+          rear: snapshot.value[key]['fixData']['rear']
         );
         setState(() {
           driverdata.add(driver);

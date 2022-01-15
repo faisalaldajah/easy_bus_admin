@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:easy_bus_admin/Model/TripDetails.dart';
 import 'package:easy_bus_admin/Model/driver.dart';
 import 'package:easy_bus_admin/brand_colors.dart';
 import 'package:easy_bus_admin/globalvariabels.dart';
